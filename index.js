@@ -11,6 +11,7 @@ server.get("/", (req, res) => {
   res.json({ message: "hello world!" });
 });
 
+//CREATE
 server.post("/api/users", (req, res) => {
   const userInfo = req.body;
 
@@ -18,6 +19,11 @@ server.post("/api/users", (req, res) => {
   users.push(userInfo);
 
   res.status(201).json(userInfo);
+});
+
+//READ
+server.get("/api/users", (req, res) => {
+  res.status(200).json(users);
 });
 
 //-----------------------------------------------------
