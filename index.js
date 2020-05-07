@@ -14,11 +14,16 @@ server.get("/", (req, res) => {
 //CREATE
 server.post("/api/users", (req, res) => {
   const userInfo = req.body;
+  if (!userInfo.name || !userInfo.bio) {
+    res
+      .status(400)
+      .json({ errorMessage: "Please provide name and bio for the user." });
+  } else {
+    userInfo.id = shortid.generate();
+    users.push(userInfo);
 
-  userInfo.id = shortid.generate();
-  users.push(userInfo);
-
-  res.status(201).json(userInfo);
+    res.status(201).json(userInfo);
+  }
 });
 
 //READ
@@ -36,7 +41,9 @@ server.get("/api/users/:id", (req, res) => {
     users = users.filter((user) => user.id !== id);
     res.status(200).json(found);
   } else {
-    res.status(404).json({ message: "user not found" });
+    res
+      .status(404)
+      .json({ message: "The user with the specified ID does not exist." });
   }
 });
 
@@ -50,7 +57,9 @@ server.delete("/api/users/:id", (req, res) => {
     users = users.filter((user) => user.id !== id);
     res.status(200).json(found);
   } else {
-    res.status(404).json({ message: "user not found" });
+    res
+      .status(404)
+      .json({ message: "The user with the specified ID does not exist." });
   }
 });
 
@@ -65,7 +74,9 @@ server.patch("/api/users/:id", (req, res) => {
     Object.assign(found, changes);
     res.status(200).json(found);
   } else {
-    res.status(404).json({ message: "user not found" });
+    res
+      .status(404)
+      .json({ message: "The user with the specified ID does not exist." });
   }
 });
 
