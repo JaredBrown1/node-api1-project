@@ -26,6 +26,23 @@ server.get("/api/users", (req, res) => {
   res.status(200).json(users);
 });
 
+// server.get("/api/users/:id", (req, res) => {
+//   res.status(200).json(users);
+// });
+
+//DELETE
+server.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+
+  const found = users.find((user) => user.id === id);
+  if (found) {
+    users = users.filter((user) => user.id !== id);
+    res.status(200).json(found);
+  } else {
+    res.status(404).json({ message: "user not found" });
+  }
+});
+
 //-----------------------------------------------------
 const PORT = 5000;
 
