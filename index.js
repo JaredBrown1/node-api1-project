@@ -43,6 +43,21 @@ server.delete("/api/users/:id", (req, res) => {
   }
 });
 
+//UPDATE
+server.patch("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  let found = users.find((user) => user.id === id);
+
+  if (found) {
+    Object.assign(found, changes);
+    res.status(200).json(found);
+  } else {
+    res.status(404).json({ message: "user not found" });
+  }
+});
+
 //-----------------------------------------------------
 const PORT = 5000;
 
